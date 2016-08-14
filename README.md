@@ -49,6 +49,11 @@ main := poet.NewFuncSpec("main").
 
 file := poet.NewFileSpec("main").
 	CodeBlock(main)
+
+err := file.WriteFile("/path/to/file.go", 0644)
+if err != nil {
+    panic(err)
+}
 ```
 
 ## Getting Started
