@@ -3,6 +3,8 @@ package poet
 import (
 	"bytes"
 	"fmt"
+	"io/ioutil"
+	"os"
 )
 
 // FileSpec represents a .go source file
@@ -161,4 +163,14 @@ func (f *FileSpec) VariableGrouping() *VariableGrouping {
 func (f *FileSpec) FileComment(comment string) *FileSpec {
 	f.Comment = comment
 	return f
+}
+
+// WriteFile takes the final in-memory file and writes it to disk
+func (f *FileSpec) WriteFile(filepath string, fileperm os.FileMode) error {
+	b := []byte(f.String())
+	err := ioutil.WriteFile(filepath, b, fileperm)
+	if err != nil {
+		return fmt.Errorf("writefile: %v", err)
+	}
+	return nil
 }
